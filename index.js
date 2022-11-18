@@ -1,7 +1,8 @@
 import express from "express";
 import mongoose from "mongoose"
 import multer from "multer"
-import * as path from 'path';
+import * as path from "path";
+import cors from "cors"
 
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +23,7 @@ mongoose.connect(
 ).catch((err) => console.log("DB error", err))
 
 const app = express();
+app.use(cors());
 
 const storage = multer.diskStorage({
     destination: (_, __, cb) => {
@@ -40,9 +42,10 @@ const upload = multer({
 app.use(express.static(path.join(__dirname, 'build')));
 
 
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
@@ -50,6 +53,8 @@ app.use('/uploads', express.static('uploads'));
 app.post("/register", registerValidator, register);
 app.post("/login", loginValidator, login);
 app.get("/me", checkAuth, profile);
+app.get("/checkAuth", checkAuth, (req, res) => res.json({
+    success:true}));
 app.delete("/me/deleteAccount", checkAuth, removeRrofile)
 app.patch("/me/updateAccount", checkAuth, registerValidator, update)
 app.post("/upload", upload.single("image"), (req, res) => {

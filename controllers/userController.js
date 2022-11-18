@@ -28,17 +28,9 @@ export const register = async (req, res) => {
 
         const user = await doc.save();
 
-        const token = jwt.sign({
-                _id: user._id,
-                email: req.body.email,
-            }
-            , "lab8", {
-                expiresIn: '10d',
-            });
-
         const {password, ...userData} = user._doc;
 
-        res.json({userData, token});
+        res.json({userData});
 
     } catch (err) {
         console.log(err);
@@ -55,6 +47,7 @@ export const login = async (req, res) => {
         if (!errors.isEmpty()) {
             return res.status(400).json(errors.array());
         }
+
         const user = await User.findOne({
             email: req.body.email
         })
