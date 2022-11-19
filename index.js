@@ -58,7 +58,6 @@ app.get("/checkAuth", checkAuth, (req, res) => res.json({
 app.delete("/me/deleteAccount", checkAuth, removeRrofile)
 app.patch("/me/updateAccount", checkAuth, registerValidator, update)
 app.post("/upload", upload.single("image"), (req, res) => {
-    console.log(req.body)
     res.json({
         url: `/uploads/${req.file.originalname}`,
     })
