@@ -35,7 +35,7 @@ export const register = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({
-                message: "Registration failed"
+                message: "Registration failed, try another email"
             }
         )
     }
