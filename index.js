@@ -42,7 +42,7 @@ const upload = multer({
 app.use(express.static(path.join(__dirname, 'build')));
 
 
-app.get(['/', '/register', '/login' ], (req, res) => {
+app.get(['/', '/register', '/login', '/me', '/updateProfile' ], (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 

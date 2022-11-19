@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken"
 
 export default (req, res, next) => {
     const token = (req.headers.authorization || "Empty").replace(/Bearer\s?/, "");
+    console.log(token)
     if (token) {
         try {
             const decodedToken = jwt.verify(token, 'lab8');
